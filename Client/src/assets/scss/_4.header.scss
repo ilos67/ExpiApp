@@ -1,0 +1,40 @@
+.navbar2 .navbar{
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: var(--color-white);
+    box-shadow: var(--dark-shadow);
+    z-index: 2;
+    display: flex;
+    justify-items: flex-start;
+  }
+
+  .nav-link-li a:link, 
+  .nav-link-li a:visited {
+    font-size: font-size(font-size-small);
+    display: block;
+    padding: 1rem 1rem;
+    text-transform: capitalize;
+    letter-spacing: var(--spacing);
+    transition: var(--transition);
+    color: var(--clr-grey-1);
+    cursor: pointer;
+  }
+  
+  
+  .nav-link-li a:hover{
+    color: var(--color-white);
+    background: var(--color-tertiary-m);
+    border-radius: var(--radius);
+  }
+
+  .navbar .nav-link-li:last-child{
+    margin-left: auto;
+  }
+  
+
+
+
+  
+ 
+ 

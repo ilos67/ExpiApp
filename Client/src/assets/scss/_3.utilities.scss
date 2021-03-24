@@ -1,0 +1,63 @@
+:root {
+    font-size: 62.5%;
+  }
+  
+  body {
+    font-family: "Roboto", sans-serif;
+    line-height: 1.9;
+    // background-color: var(--color-primary);
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns:
+      [container-start] 1fr [center-start] repeat(6, [col-start] minmax(min-content, 16.66667rem) [col-end])    [center-end] 1fr [container-end];
+    grid-template-rows: min-content 90vh repeat(9, min-content);
+  
+    // @include media-tablet {
+    //   grid-template-rows: min-content 100vh repeat(9, min-content);
+    // }
+  }
+  .card label{
+    font-size: 1.25rem;
+  }
+
+  .container-table {
+    display: flex;
+    flex-grow: 3;
+    justify-content: center;
+align-items: center;  
+
+    // display: grid;
+    // grid-template-columns: 1fr 50vw 1fr;
+    // justify-content: center;
+    // align-items: center;
+  
+    // @include media-tablet {
+    //   grid-template-rows: min-content 100vh repeat(9, min-content);
+    // }
+    border:2px solid red;
+    border-radius: var(--radius);
+  }
+
+  
+  li {
+    list-style: none;
+  }
+  
+  a:link,
+  a:visited {
+    text-decoration: none;
+    color: var(--color-quinary-m);
+    font-weight: font-weight(font-weight-light);
+    letter-spacing: 0.2rem;
+    font-size: font-size(font-size-small);
+  }
+  
+  i {
+    color: var(--color-primary);
+    font-size: font-size(font-size-medium);
+  }
+
+
+  

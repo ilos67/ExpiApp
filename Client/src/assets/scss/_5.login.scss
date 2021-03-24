@@ -1,0 +1,66 @@
+
+.giris {
+  background: url(../img/login-bg.jpg);
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center center;
+  min-height: 99vh;
+  display: flex;
+  justify-content: center;
+  // align-content: center;
+}
+.row{
+  display: flex;
+  align-content: center;
+}
+
+
+.kemo-session-card {
+  background-color: var(--color-white);
+  width: 40vw;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--dark-shadow);
+}
+
+.kemo-profile-card {
+  margin: auto;
+  padding: 1rem;
+  background-color: var(--color-white);
+  width: 60vw;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--dark-shadow);
+}
+
+.profile-layout{
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;;
+}
+.profile-detail {
+  width: 70vw;
+  background-color: lightcoral;
+  display: flex;
+  
+  flex-direction: column;
+  justify-content: center;
+}
+
+.admin-layout-card {
+  padding: 1rem;
+  background-color: var(--color-white);
+  width: 80vw;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--dark-shadow);
+}
+
+.form-control {
+  font-size: font-size(font-size-mini);
+}
+
+.form-check-label {
+  margin-left: .5rem;
+}
+
