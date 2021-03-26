@@ -6,7 +6,7 @@ import { map, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Account } from '../_models/account'
 
-const baseUrl = `${environment.apiUrl}/accounts`;
+const baseUrl = `${environment.apiUrl}accounts`;
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class AccountService {
   private accountSubject: BehaviorSubject<Account>;
     public account: Observable<Account>;
 
-    private currentUserSource = new ReplaySubject<Account>(1);
-    currentUser$ = this.currentUserSource.asObservable();
+    // private currentUserSource = new ReplaySubject<Account>(1);
+    // currentUser$ = this.currentUserSource.asObservable();
 
     constructor(
         private router: Router,
@@ -34,8 +34,10 @@ export class AccountService {
         return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
             .pipe(map(account => {
                 this.accountSubject.next(account);
+                console.log(account);
                 this.startRefreshTokenTimer();
                 return account;
+                
             }));
     }
 

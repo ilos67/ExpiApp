@@ -31,6 +31,16 @@
   .navbar .nav-link-li:last-child{
     margin-left: auto;
   }
+
+  .containerk {
+    margin-top: 5rem;
+    padding: 0 2rem 0 0.5rem;
+  }
+  .hadi {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(268.5px, 1fr));
+    grid-gap: 0.5rem;
+}
   
 
 

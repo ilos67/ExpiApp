@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { appInitializer, ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AlertComponent } from './_components/alert.component';
 import { HomeComponent } from './home/home.component';
-import { MainComponent } from './main/main.component';
 import { MainModule } from './main/main.module';
+import { AccountService } from './_services/account.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { MainModule } from './main/main.module';
     HttpClientModule
   ],
   providers: [
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
