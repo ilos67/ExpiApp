@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using API.Helpers;
-using Infrastructure.Identity;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +22,7 @@ namespace API.Middleware
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, IdentityDataContext dataContext)
+        public async Task Invoke(HttpContext context, StoreContext dataContext)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
@@ -32,7 +32,7 @@ namespace API.Middleware
             await _next(context);
         }
 
-        private async Task attachAccountToContext(HttpContext context, IdentityDataContext dataContext, string token)
+        private async Task attachAccountToContext(HttpContext context, StoreContext dataContext, string token)
         {
             try
             {

@@ -21,6 +21,9 @@ namespace Core.Entities.Identity
         public DateTime? PasswordReset { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
+        public ICollection<Recipe> Recipes { get; set; }
+
+        public ICollection<FavouriteRecipe> FavouriteRecipes { get; set; }
         public List<RefreshToken> RefreshTokens { get; set; }
 
         public bool OwnsToken(string token) 

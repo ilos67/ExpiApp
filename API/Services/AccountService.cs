@@ -9,7 +9,7 @@ using API.Helpers;
 using API.Resources.Accounts;
 using AutoMapper;
 using Core.Entities.Identity;
-using Infrastructure.Identity;
+using Infrastructure.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using BC = BCrypt.Net.BCrypt;
@@ -18,13 +18,13 @@ namespace API.Services
 {
     public class AccountService: IAccountService
     {
-         private readonly IdentityDataContext _context;
+         private readonly StoreContext _context;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly IEmailService _emailService;
 
         public AccountService(
-            IdentityDataContext context,
+            StoreContext context,
             IMapper mapper,
             IOptions<AppSettings> appSettings,
             IEmailService emailService)

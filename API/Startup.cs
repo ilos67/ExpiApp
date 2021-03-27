@@ -8,7 +8,6 @@ using API.Middleware;
 using API.Services;
 using Core.Interface;
 using Infrastructure.Data;
-using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -38,10 +37,10 @@ namespace API
             {
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddDbContext<IdentityDataContext>(x => 
-            {
-                x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
-            });
+            // services.AddDbContext<IdentityDataContext>(x => 
+            // {
+            //     x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
+            // });
             services.AddCors();
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
