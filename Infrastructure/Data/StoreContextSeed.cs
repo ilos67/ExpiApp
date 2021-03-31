@@ -54,19 +54,29 @@ namespace Infrastructure.Data
                     var productsData =
                         File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
 
-                    var products = JsonSerializer.Deserialize<List<Product>>(productsData);
+                    var products = JsonSerializer.Deserialize<List<ProductSeedModel>>(productsData);
 
                     foreach (var item in products)
                     {
-                        context.Products.Add(item);
+                        var pictureFileName = item.PictureUrl.Substring(16);
+                        var product = new Product
+                        {
+                            Name = item.Name,
+                            Description = item.Description,
+                            Price = item.Price,
+                            ProductBrandId = item.ProductBrandId,
+                            ProductTypeId = item.ProductTypeId
+                        };
+                        product.AddPhoto(item.PictureUrl, pictureFileName);
+                        context.Products.Add(product);
                     }
 
                     await context.SaveChangesAsync();
                 }
 
-                            if (!context.Categories.Any())
-            {
-                var categories = new List<MealCategory>()
+                if (!context.Categories.Any())
+                {
+                    var categories = new List<MealCategory>()
                 {
                     new MealCategory() { Name = "Breakfast" },
                     new MealCategory() { Name = "Dessert" },
@@ -80,16 +90,16 @@ namespace Infrastructure.Data
                     new MealCategory() { Name = "Side Dishes" }
                 };
 
-                foreach (var category in categories)
-                    context.Categories.Add(category);
-					
-			    await context.SaveChangesAsync();
-            }
+                    foreach (var category in categories)
+                        context.Categories.Add(category);
+
+                    await context.SaveChangesAsync();
+                }
 
 
-            if (!context.IngredientCategory.Any())
-            {
-                var categories = new List<IngredientCategory>()
+                if (!context.IngredientCategory.Any())
+                {
+                    var categories = new List<IngredientCategory>()
                 {
                     new IngredientCategory() { Name = "Other" },
                     new IngredientCategory() { Name = "Nuts And Oilseeds" },
@@ -103,26 +113,26 @@ namespace Infrastructure.Data
                     new IngredientCategory() { Name = "Vegetables" },
                 };
 
-                foreach (var category in categories)
-                    context.IngredientCategory.Add(category);
-					await context.SaveChangesAsync();
-            }
+                    foreach (var category in categories)
+                        context.IngredientCategory.Add(category);
+                    await context.SaveChangesAsync();
+                }
 
 
-            if (!context.Ingredients.Any())
-            {
-                var categoryMeat = context.IngredientCategory.Local.Where(a => a.Name == "Meat").First();
-                var categoryVegetables = context.IngredientCategory.Local.Where(a => a.Name == "Vegetables").First();
-                var categorySpicesAndHerbs = context.IngredientCategory.Local.Where(a => a.Name == "Spices And Herbs").First();
-                var categoryCarealsAndPulses = context.IngredientCategory.Local.Where(a => a.Name == "Careals And Pulses").First();
-                var categoryDairyProducts = context.IngredientCategory.Local.Where(a => a.Name == "Dairy Products").First();
-                var categoryFruits = context.IngredientCategory.Local.Where(a => a.Name == "Fruits").First();
-                var categorySeafood = context.IngredientCategory.Local.Where(a => a.Name == "Seafood").First();
-                var categorySugar = context.IngredientCategory.Local.Where(a => a.Name == "Sugar").First();
-                var categoryNuts = context.IngredientCategory.Local.Where(a => a.Name == "Nuts And Oilseeds").First();
-                var categoryOther = context.IngredientCategory.Local.Where(a => a.Name == "Other").First();
+                if (!context.Ingredients.Any())
+                {
+                    var categoryMeat = context.IngredientCategory.Local.Where(a => a.Name == "Meat").First();
+                    var categoryVegetables = context.IngredientCategory.Local.Where(a => a.Name == "Vegetables").First();
+                    var categorySpicesAndHerbs = context.IngredientCategory.Local.Where(a => a.Name == "Spices And Herbs").First();
+                    var categoryCarealsAndPulses = context.IngredientCategory.Local.Where(a => a.Name == "Careals And Pulses").First();
+                    var categoryDairyProducts = context.IngredientCategory.Local.Where(a => a.Name == "Dairy Products").First();
+                    var categoryFruits = context.IngredientCategory.Local.Where(a => a.Name == "Fruits").First();
+                    var categorySeafood = context.IngredientCategory.Local.Where(a => a.Name == "Seafood").First();
+                    var categorySugar = context.IngredientCategory.Local.Where(a => a.Name == "Sugar").First();
+                    var categoryNuts = context.IngredientCategory.Local.Where(a => a.Name == "Nuts And Oilseeds").First();
+                    var categoryOther = context.IngredientCategory.Local.Where(a => a.Name == "Other").First();
 
-                var ingredients = new List<Ingredient>()
+                    var ingredients = new List<Ingredient>()
                 {
                             new Ingredient() { Name = "Tomato", IngredientCategory = categoryVegetables },
                             new Ingredient() { Name = "Turnip", IngredientCategory = categoryVegetables },
@@ -162,13 +172,13 @@ namespace Infrastructure.Data
                             new Ingredient() { Name = "Jelly", IngredientCategory = categoryOther },
                 };
 
-                foreach (var ingredient in ingredients)
-                    context.Ingredients.Add(ingredient);
-					
-					await context.SaveChangesAsync();
-            }
+                    foreach (var ingredient in ingredients)
+                        context.Ingredients.Add(ingredient);
 
-               
+                    await context.SaveChangesAsync();
+                }
+
+
             }
             catch (Exception ex)
             {

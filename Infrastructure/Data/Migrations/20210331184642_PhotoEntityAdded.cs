@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class PhotoEntityAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -182,7 +182,6 @@ namespace Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 180, nullable: false),
                     Price = table.Column<double>(type: "decimal(18,2)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "TEXT", nullable: false),
                     ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductBrandId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -275,6 +274,28 @@ namespace Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PictureUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    FileName = table.Column<string>(type: "TEXT", nullable: true),
+                    IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_AccountId",
                 table: "Comments",
@@ -289,6 +310,11 @@ namespace Infrastructure.Data.Migrations
                 name: "IX_Ingredients_IngredientCategoryId",
                 table: "Ingredients",
                 column: "IngredientCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_ProductId",
+                table: "Photos",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductBrandId",
@@ -338,7 +364,7 @@ namespace Infrastructure.Data.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Photos");
 
             migrationBuilder.DropTable(
                 name: "RecipeItems");
@@ -353,13 +379,16 @@ namespace Infrastructure.Data.Migrations
                 name: "IngredientCategories");
 
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Recipes");
+
+            migrationBuilder.DropTable(
                 name: "ProductBrands");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
-
-            migrationBuilder.DropTable(
-                name: "Recipes");
 
             migrationBuilder.DropTable(
                 name: "Accounts");

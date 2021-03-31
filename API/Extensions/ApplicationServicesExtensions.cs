@@ -3,6 +3,7 @@ using API.Errors;
 using API.Services;
 using Core.Interface;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ namespace API.Extensions
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
             services.Configure<ApiBehaviorOptions>(options => 

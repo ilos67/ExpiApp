@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
-    public class File: BaseEntity
+    public class FilesRecipe: BaseEntity
     {
         [StringLength(255)]
         public string FileName { get; set; }

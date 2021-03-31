@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ProductsService } from 'src/app/products/products.service';
-import { IBrand, IType, ProductFormValues } from 'src/app/_models';
+import { IBrand, IType, ProductFormValues, IProduct } from 'src/app/_models';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -11,7 +11,8 @@ import { AdminService } from '../admin.service';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent implements OnInit {
-  product: ProductFormValues;
+  product: IProduct;
+  productFormValues: ProductFormValues;
   brands: IBrand[];
   types: IType[];
 
@@ -19,7 +20,7 @@ export class EditProductComponent implements OnInit {
               private productService: ProductsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.product = new ProductFormValues();
+    this.productFormValues = new ProductFormValues();
   }
 
   ngOnInit(): void {
@@ -44,11 +45,12 @@ export class EditProductComponent implements OnInit {
 
   loadProduct() {
     this.productService.getProduct(+this.route.snapshot.paramMap.get('id')).subscribe((response: any) => {
-      const productBrandId = this.brands && this.brands.find(x => x.name === response.productBrand).id;
-      const productTypeId = this.types && this.types.find(x => x.name === response.productType).id;
-      this.product = {...response, productBrandId, productTypeId};
-    });
-  }
+        const productBrandId = this.brands && this.brands.find(x => x.name === response.productBrand).id;
+        const productTypeId = this.types && this.types.find(x => x.name === response.productType).id;
+        this.product = response;
+        this.productFormValues = {...response, productBrandId, productTypeId};
+      });
+    }
 
   getBrands() {
     return this.productService.getBrands();
