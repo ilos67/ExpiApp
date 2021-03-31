@@ -6,6 +6,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {PaginationModule } from 'ngx-bootstrap/pagination';
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
 @NgModule({
@@ -16,13 +17,17 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
     PaginationModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    CurrencyMaskModule
   ],
   exports:[
     CarouselModule,
     PaginationModule,
     PagerComponent,
-    PagingHeaderComponent
+    PagingHeaderComponent,
+    CurrencyMaskModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

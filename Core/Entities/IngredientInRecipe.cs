@@ -5,12 +5,17 @@ namespace Core.Entities
     [Table("IngredientsInRecipes")]
     public class IngredientInRecipe : BaseEntity
     {
-        public int IngredientId { get; set; }
-        public Ingredient Ingredient { get; set; }
+        public IngredientInRecipe()
+        {
+        }
 
-        public int RecipeId { get; set; }
-        public Recipe Recipe { get; set; }
+        public IngredientInRecipe(IngredientItemOrdered ıtemInRecipe, int quantity)
+        {
+            ItemInRecipe = ıtemInRecipe;
+            Quantity = quantity;
+        }
 
-        public string Quantity { get; set; }
+        public IngredientItemOrdered ItemInRecipe { get; set; }
+        public int Quantity { get; set; }
     }
 }

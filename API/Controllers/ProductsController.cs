@@ -17,8 +17,10 @@ namespace API.Controllers
         private readonly IGenericRepository<ProductType> _productTypeRepo;
         private readonly IGenericRepository<ProductBrand> _productBrandRepo;
         private readonly IMapper _mapper;
-        public ProductsController(IGenericRepository<Product> productsRepo, IGenericRepository<ProductBrand> productBrandRepo, IGenericRepository<ProductType> productTypeRepo, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductsController(IGenericRepository<Product> productsRepo, IGenericRepository<ProductBrand> productBrandRepo, IGenericRepository<ProductType> productTypeRepo, IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _productBrandRepo = productBrandRepo;
             _productTypeRepo = productTypeRepo;
@@ -35,12 +37,12 @@ namespace API.Controllers
             //  1-  var products = await _context.Products.ToListAsync(); // After Interfaces made
             //  2- var products = await _repo.GetProductsAsync();
             //  3-  var products = await _productsRepo.ListAllAsync();
-           /*   4-
-            var spec = new ProductsWithTypesAndBrandsSpecification();
-            var products = await _productsRepo.ListAsync(spec);
+            /*   4-
+             var spec = new ProductsWithTypesAndBrandsSpecification();
+             var products = await _productsRepo.ListAsync(spec);
 
-            return Ok(products);
-            */
+             return Ok(products);
+             */
 
             /*5-
              var spec = new ProductsWithTypesAndBrandsSpecification();
@@ -52,7 +54,7 @@ namespace API.Controllers
 
             var countSpec = new ProductWithFiltersForCountSpecification(productParams);
 
-            var totalItems =  await _productsRepo.CountAsync(countSpec);
+            var totalItems = await _productsRepo.CountAsync(countSpec);
 
             var products = await _productsRepo.ListAsync(spec);
 
@@ -79,8 +81,8 @@ namespace API.Controllers
 
             var product = await _productsRepo.GetEntityWithSpec(spec);
 
-            if(product == null) return NotFound(new ApiResponse(404));
-            
+            if (product == null) return NotFound(new ApiResponse(404));
+
             return _mapper.Map<Product, ProductToReturnDto>(product);
 
 
@@ -100,6 +102,50 @@ namespace API.Controllers
             return Ok(await _productTypeRepo.ListAllAsync());
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Product>> CreateProduct(ProductCreateDto productToCreate)
+        {
+            var product = _mapper.Map<ProductCreateDto, Product>(productToCreate);
+            product.PictureUrl = "../Content/images/products/placeholder.png";
+
+            _unitOfWork.Repository<Product>().Add(product);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating product"));
+
+            return Ok(product);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Product>> UpdateProduct(int id, ProductCreateDto productToUpdate)
+        {
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+
+            _mapper.Map(productToUpdate, product);
+
+            _unitOfWork.Repository<Product>().Update(product);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating product"));
+
+            return Ok(product);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+
+            _unitOfWork.Repository<Product>().Delete(product);
+
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
+
+            return Ok();
+        }
 
     }
 }

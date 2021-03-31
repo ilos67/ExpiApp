@@ -198,6 +198,12 @@ namespace API.Services
             return _mapper.Map<AccountResponse>(account);
         }
 
+          public AccountResponse GetByEmail(string email)
+        {
+             var account = getAccount(email);
+            return _mapper.Map<AccountResponse>(account);
+        }
+
         public AccountResponse Create(CreateRequest model)
         {
             // validate
@@ -256,6 +262,13 @@ namespace API.Services
             return account;
         }
 
+         private Account getAccount(string email)
+        {
+            var account = _context.Accounts.Find(email);
+            if (account == null) throw new KeyNotFoundException("Account not found");
+            return account;
+        }
+      
         private (RefreshToken, Account) getRefreshToken(string token)
         {
             var account = _context.Accounts.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
@@ -369,5 +382,7 @@ namespace API.Services
                          {message}"
             );
         }
+
+
     }
 }

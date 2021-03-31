@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20210326142815_InitialCreate")]
+    [Migration("20210330100436_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,22 @@ namespace Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.4");
+
+            modelBuilder.Entity("Core.Entities.Basket", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BasketData")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("LastUpdated")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Baskets");
+                });
 
             modelBuilder.Entity("Core.Entities.Comment", b =>
                 {
@@ -44,24 +60,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Core.Entities.FavouriteRecipe", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AccountId", "RecipeId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("FavouriteRecipes");
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.Account", b =>
@@ -123,18 +121,12 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("IngredientCategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -156,30 +148,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IngredientCategories");
-                });
-
-            modelBuilder.Entity("Core.Entities.IngredientInRecipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Quantity")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("IngredientsInRecipes");
                 });
 
             modelBuilder.Entity("Core.Entities.MealCategory", b =>
@@ -269,33 +237,19 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<long>("CreatedAt")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("DifficultyLevel")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Instructions")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int?>("MealCategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PreparationTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ShortDescription")
+                    b.Property<string>("SourceEmail")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -305,6 +259,25 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("MealCategoryId");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("Core.Entities.RecipeItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("RecipeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeItems");
                 });
 
             modelBuilder.Entity("Core.Entities.RecipePicture", b =>
@@ -329,8 +302,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeId")
-                        .IsUnique();
+                    b.HasIndex("RecipeId");
 
                     b.ToTable("RecipePictures");
                 });
@@ -344,26 +316,7 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Recipe", "Recipe")
-                        .WithMany("Comments")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Recipe");
-                });
-
-            modelBuilder.Entity("Core.Entities.FavouriteRecipe", b =>
-                {
-                    b.HasOne("Core.Entities.Identity.Account", "Account")
-                        .WithMany("FavouriteRecipes")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Recipe", "Recipe")
-                        .WithMany("FavouriteRecipes")
+                        .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -431,25 +384,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("IngredientCategory");
                 });
 
-            modelBuilder.Entity("Core.Entities.IngredientInRecipe", b =>
-                {
-                    b.HasOne("Core.Entities.Ingredient", "Ingredient")
-                        .WithMany()
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Recipe", "Recipe")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
                     b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
@@ -471,26 +405,51 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Recipe", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.Account", "Account")
+                    b.HasOne("Core.Entities.Identity.Account", null)
                         .WithMany("Recipes")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("Core.Entities.MealCategory", "MealCategory")
                         .WithMany()
                         .HasForeignKey("MealCategoryId");
 
-                    b.Navigation("Account");
-
                     b.Navigation("MealCategory");
+                });
+
+            modelBuilder.Entity("Core.Entities.RecipeItems", b =>
+                {
+                    b.HasOne("Core.Entities.Recipe", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("Core.Entities.IngredientItemOrdered", "ItemReciped", b1 =>
+                        {
+                            b1.Property<int>("RecipeItemsId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("IngredientItemId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("IngredientName")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("RecipeItemsId");
+
+                            b1.ToTable("RecipeItems");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RecipeItemsId");
+                        });
+
+                    b.Navigation("ItemReciped");
                 });
 
             modelBuilder.Entity("Core.Entities.RecipePicture", b =>
                 {
                     b.HasOne("Core.Entities.Recipe", "Recipe")
-                        .WithOne("Picture")
-                        .HasForeignKey("Core.Entities.RecipePicture", "RecipeId")
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -499,20 +458,12 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.Account", b =>
                 {
-                    b.Navigation("FavouriteRecipes");
-
                     b.Navigation("Recipes");
                 });
 
             modelBuilder.Entity("Core.Entities.Recipe", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("FavouriteRecipes");
-
                     b.Navigation("Ingredients");
-
-                    b.Navigation("Picture");
                 });
 #pragma warning restore 612, 618
         }

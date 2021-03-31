@@ -23,61 +23,61 @@ namespace API.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Pagination<IngredientDTO>>> GetIngredients(
-          [FromQuery] IngredientSpecParams ingredientParams)
+        // [HttpGet]
+        // public async Task<ActionResult<Pagination<IngredientDTO>>> GetIngredients(
+        //   [FromQuery] IngredientSpecParams ingredientParams)
 
-        {
-            //  1-  var products = await _context.Products.ToListAsync(); // After Interfaces made
-            //  2- var products = await _repo.GetProductsAsync();
-            //  3-  var products = await _productsRepo.ListAllAsync();
-            /*   4-
-             var spec = new ProductsWithTypesAndBrandsSpecification();
-             var products = await _productsRepo.ListAsync(spec);
+        // {
+        //     //  1-  var products = await _context.Products.ToListAsync(); // After Interfaces made
+        //     //  2- var products = await _repo.GetProductsAsync();
+        //     //  3-  var products = await _productsRepo.ListAllAsync();
+        //     /*   4-
+        //      var spec = new ProductsWithTypesAndBrandsSpecification();
+        //      var products = await _productsRepo.ListAsync(spec);
 
-             return Ok(products);
-             */
+        //      return Ok(products);
+        //      */
 
-            /*5-
-             var spec = new ProductsWithTypesAndBrandsSpecification();
-            // var products = await _productsRepo.ListAsync(spec);
-            // return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
-            */
+        //     /*5-
+        //      var spec = new ProductsWithTypesAndBrandsSpecification();
+        //     // var products = await _productsRepo.ListAsync(spec);
+        //     // return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+        //     */
 
-            var spec = new IngredientWithCategorySpecification(ingredientParams);
+        // //     var spec = new IngredientWithCategorySpecification(ingredientParams);
 
-            var countSpec = new IngredientWithFiltersForCountSpecification(ingredientParams);
+        // //     var countSpec = new IngredientWithFiltersForCountSpecification(ingredientParams);
 
-            var totalItems = await _ingredientRepo.CountAsync(countSpec);
+        // //     var totalItems = await _ingredientRepo.CountAsync(countSpec);
 
-            var ingredients = await _ingredientRepo.ListAsync(spec);
+        // //     var ingredients = await _ingredientRepo.ListAsync(spec);
 
-            var data = _mapper.Map<IReadOnlyList<Ingredient>, IReadOnlyList<IngredientDTO>>(ingredients);
+        // //     var data = _mapper.Map<IReadOnlyList<Ingredient>, IReadOnlyList<IngredientDTO>>(ingredients);
 
-            return Ok(new Pagination<IngredientDTO>(ingredientParams.PageIndex, ingredientParams.PageSize, totalItems, data));
+        // //     return Ok(new Pagination<IngredientDTO>(ingredientParams.PageIndex, ingredientParams.PageSize, totalItems, data));
 
 
-        }
+        // // }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IngredientDTO>> GetIngredient(int id)
-        {
-            var spec = new IngredientWithCategorySpecification(id);
+        // // [HttpGet("{id}")]
+        // // [ProducesResponseType(StatusCodes.Status200OK)]
+        // // [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        // // public async Task<ActionResult<IngredientDTO>> GetIngredient(int id)
+        // // {
+        // //     var spec = new IngredientWithCategorySpecification(id);
 
-            var ingredient = await _ingredientRepo.GetEntityWithSpec(spec);
+        // //     var ingredient = await _ingredientRepo.GetEntityWithSpec(spec);
 
-            if (ingredient == null) return NotFound(new ApiResponse(404));
+        // //     if (ingredient == null) return NotFound(new ApiResponse(404));
 
-            return _mapper.Map<Ingredient, IngredientDTO>(ingredient);
-        }
+        // //     return _mapper.Map<Ingredient, IngredientDTO>(ingredient);
+        // // }
 
         
-        [HttpGet("ingredientCategory")]
-        public async Task<ActionResult<IReadOnlyList<IngredientCategory>>> GetIngredientCategory()
-        {
-            return Ok(await _ingredientRepo.ListAllAsync());
-        }
+        // [HttpGet("ingredientCategory")]
+        // public async Task<ActionResult<IReadOnlyList<IngredientCategory>>> GetIngredientCategory()
+        // {
+        //     return Ok(await _ingredientRepo.ListAllAsync());
+        // }
     }
 }

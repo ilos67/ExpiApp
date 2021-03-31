@@ -4,8 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { OverviewComponent } from './overview/overview.component';
 import { SubnavComponent } from './subnav/subnav.component';
+import { EditProductComponent } from './admin-product/edit-product/edit-product.component';
 
 const accountsModule = () => import('./accounts/accounts.module').then(x => x.AccountsModule);
+const adminProductModule = () => import('./admin-product/admin-product.module').then(x => x.AdminProductModule);
 
 const routes: Routes = [
     { path: '', component: SubnavComponent, outlet: 'subnav' },
@@ -13,7 +15,8 @@ const routes: Routes = [
         path: '', component: LayoutComponent,
         children: [
             { path: '', component: OverviewComponent },
-            { path: 'accounts', loadChildren: accountsModule }
+            { path: 'accounts', loadChildren: accountsModule },
+            { path: 'admin-product', loadChildren: adminProductModule },
         ]
     }
 ];

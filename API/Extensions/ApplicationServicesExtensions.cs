@@ -1,5 +1,6 @@
 using System.Linq;
 using API.Errors;
+using API.Services;
 using Core.Interface;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,11 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
             services.Configure<ApiBehaviorOptions>(options => 
             {

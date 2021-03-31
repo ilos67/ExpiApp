@@ -34,13 +34,24 @@ namespace API.Helpers
                     }
                 ));
 
+             CreateMap<UserBasketDto, UserBasket>();
+            CreateMap<BasketItemDto, BasketItem>();
+
+            CreateMap<ProductCreateDto, Product>();
+
             CreateMap<Product, ProductToReturnDto>()
              .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name)) 
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
 
-            CreateMap<Ingredient, IngredientDTO>()
-             .ForMember(d => d.IngredientCategory, o => o.MapFrom(s => s.IngredientCategory.Name));
+            CreateMap<Ingredient, IngredientDTO>();
+            CreateMap<Recipe, RecipeToReturnDTO>()
+            .ForMember(d => d.MealCategory,  o => o.MapFrom(s => s.MealCategory.Name));
+
+            CreateMap<RecipeItems, IngredientDTO>()
+                .ForMember(d => d.IngredientId, o => o.MapFrom(s => s.ItemReciped.IngredientItemId))
+                .ForMember(d => d.IngredientName, o => o.MapFrom(s => s.ItemReciped.IngredientName));
+                
         }
     }
 }

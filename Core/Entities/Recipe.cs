@@ -9,42 +9,23 @@ namespace Core.Entities
     [Table("Recipes")]
     public class Recipe : BaseEntity
     {
-        [Required]
+        public Recipe()
+        {
+        }
+
+        public Recipe(IReadOnlyList<RecipeItems> ingredients, MealCategory mealCategory, string sourceEmail)
+        {
+            MealCategory = mealCategory;
+            SourceEmail = sourceEmail;
+            Ingredients = ingredients;
+        }
+
         public string Name { get; set; }
-
-        [Display(Name = "Short Description")]
-        public string ShortDescription { get; set; }
-
-        [Required]
-        public string Instructions { get; set; }
-
-        [Display(Name = "Preparation Time")]
-        public string PreparationTime { get; set; }
-
-        [EnumDataType(typeof(DifficultyLevel))]
-        public DifficultyLevel DifficultyLevel { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public int CategoryId { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }= DateTimeOffset.Now;
         public MealCategory MealCategory { get; set; }
-
-        public int AccountId { get; set; }
-        public Account Account { get; set; }
-
-        public RecipePicture Picture { get; set; }
-
-        public IEnumerable<IngredientInRecipe> Ingredients { get; set; }
-
-        public IEnumerable<FavouriteRecipe> FavouriteRecipes { get; set; }
-
-        public IEnumerable<Comment> Comments { get; set; }
+        public string SourceEmail { get; set; }
+        public IReadOnlyList<RecipeItems> Ingredients { get; set; }
+       
     }
 
-    public enum DifficultyLevel
-    {
-        Easy = 1,
-        Medium = 2,
-        Hard = 3
-    }
 }

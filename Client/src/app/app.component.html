@@ -6,7 +6,7 @@
           <li class="nav-link-li"> <a routerLink="/home" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact: true}" >Home</a></li>
           <li class="nav-link-li"><a routerLink="/profile" routerLinkActive="active" class="nav-link" >Profile</a></li>
           <li class="nav-link-li"><a routerLink="/products" routerLinkActive="active" class="nav-link" >Products</a></li>
-          <li class="nav-link-li"><a *ngIf="account.role === Role.Admin" routerLink="/admin/accounts" routerLinkActive="active" class="nav-link" >Admin</a></li>
+          <li class="nav-link-li"><a *ngIf="account.role === Role.Admin" routerLink="/admin" routerLinkActive="active" class="nav-link" >Admin</a></li>
           <li class="nav-link-li"><a (click)="logout()" routerLink="/" routerLinkActive="active" class="nav-link last-link-button" >Logout</a></li>
         </ul>  
       </div>
