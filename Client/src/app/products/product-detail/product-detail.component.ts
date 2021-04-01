@@ -30,10 +30,11 @@ ngOnInit() {
   initializeGallery() {
     this.galleryOptions = [
       {
-        width: '500px',
-        height: '600px',
+        width: '400px',
+        height: '500px',
         imagePercent: 100,
         thumbnailsColumns: 4,
+        imageArrowsAutoHide:true,
         imageAnimation: NgxGalleryAnimation.Fade,
         imageSize: NgxGalleryImageSize.Contain,
         thumbnailSize: NgxGalleryImageSize.Contain,
@@ -60,6 +61,7 @@ ngOnInit() {
   loadProduct() {
     this.productService.getProduct(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(product => {
       this.product = product;
+      console.log(this.product);
       // this.bcService.set('@productDetails', product.name);
       this.initializeGallery();
     }, error => {

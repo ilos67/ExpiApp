@@ -3,3 +3,24 @@
     grid-template-columns: repeat(auto-fill, minmax(268.5px, 1fr));
     grid-gap: 0.5rem;
 }
+
+.list-group-item {
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.active {
+        border-radius: 10px;
+    }
+
+    &:not(.active):hover {
+        color: #fff;
+        background-color: rgba(233, 86, 32, 0.705);
+        border-radius: 10px;
+    }
+}
