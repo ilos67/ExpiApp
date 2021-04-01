@@ -99,6 +99,7 @@ namespace API.Controllers
         public async Task<ActionResult<ProductToReturnDto>> CreateProduct(ProductCreateDto productToCreate)
         {
             var product = _mapper.Map<ProductCreateDto, Product>(productToCreate);
+            // product.PictureUrl = "images/products/placeholder.png";
 
             _unitOfWork.Repository<Product>().Add(product);
 
@@ -106,13 +107,13 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating product"));
 
-            return _mapper.Map<Product, ProductToReturnDto>(product);
+             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
-
+        
         [HttpPut("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, ProductCreateDto productToUpdate)
         {
-            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+           var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
 
             _mapper.Map(productToUpdate, product);
 
@@ -124,7 +125,22 @@ namespace API.Controllers
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+            
+            _unitOfWork.Repository<Product>().Delete(product);
 
+            var result = await _unitOfWork.Complete();
+            
+            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
+
+            return Ok();
+        }
+
+        
         [HttpPut("{id}/photo")]
         public async Task<ActionResult<ProductToReturnDto>> AddProductPhoto(int id, [FromForm] ProductPhotoDto photoDto)
         {
@@ -206,27 +222,6 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
-        {
-            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
-
-            foreach (var photo in product.Photos)
-            {
-                if (photo.Id > 18)
-                {
-                    _photoService.DeleteFromDisk(photo);
-                }
-            }
-            
-            _unitOfWork.Repository<Product>().Delete(product);
-
-            var result = await _unitOfWork.Complete();
-            
-            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
-
-            return Ok();
-        }
-
+      
     }
 }
