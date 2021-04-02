@@ -8,17 +8,14 @@ import { AccountService } from './_services/account.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  Role = Role;
-  account: Account;
+  // Role = Role;
+  // account: Account;
 
   constructor(private accountService: AccountService) {
-      this.accountService.account.subscribe(x => this.account = x);
+      // this.accountService.account.subscribe(x => this.account = x);
   }
 
-  logout() {
-      this.accountService.logout();
-      console.log(this.accountService.accountValue);
-      
-      console.log(this.account);
-  }
+  // logout() {
+  //     this.accountService.logout();
+  // }
 }

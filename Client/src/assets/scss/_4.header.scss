@@ -1,9 +1,28 @@
+.xng-breadcrumb-root {
+  padding: 8px 16px;
+  display: inline;
+  border-radius: 0;
+}
+
+label.xng-breadcrumb-trail {
+  margin-bottom: 0;
+  color: orange;
+}
+
+.xng-breadcrumb-separator {
+  padding: 0 0;
+}
+
+.StripeElement {
+  height: 3.125em;
+}
+
 .navbar2 .navbar{
     left: 0;
     top: 0;
     width: 100%;
-    background: var(--color-white);
-    box-shadow: var(--dark-shadow);
+    // background: var(--color-white);
+    // box-shadow: var(--dark-shadow);
     z-index: 2;
     display: flex;
     justify-items: flex-start;
@@ -17,8 +36,13 @@
     text-transform: capitalize;
     letter-spacing: var(--spacing);
     transition: var(--transition);
-    color: var(--clr-grey-1);
+    // color: var(--clr-grey-1);
     cursor: pointer;
+    text-decoration: none;
+    color: var(--color-quinary-m);
+    font-weight: font-weight(font-weight-light);
+    // letter-spacing: 0.2rem;
+    // font-size: font-size(font-size-small);
   }
   
   
@@ -33,7 +57,7 @@
   }
 
   .containerk {
-    margin-top: 5rem;
+    margin-top: 2rem;
     padding: 0 2rem 0 0.5rem;
   }
   .hadi {

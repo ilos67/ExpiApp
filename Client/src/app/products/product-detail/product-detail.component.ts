@@ -3,6 +3,7 @@ import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOpt
 import { IProduct } from '../../_models'
 import { ProductsService } from '../products.service';
 import { ActivatedRoute} from '@angular/router';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,8 +20,8 @@ export class ProductDetailComponent implements OnInit {
 /**
  *
  */
-constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) {
-  
+constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService, private bcService: BreadcrumbService,) {
+  this.bcService.set('@ProductDetails', '');
 }
 
 ngOnInit() {
@@ -61,8 +62,7 @@ ngOnInit() {
   loadProduct() {
     this.productService.getProduct(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(product => {
       this.product = product;
-      console.log(this.product);
-      // this.bcService.set('@productDetails', product.name);
+      this.bcService.set('@ProductDetails', product.name);
       this.initializeGallery();
     }, error => {
       console.log(error);

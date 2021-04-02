@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
 import { MustMatch } from 'src/app/_helpers';
 import { AccountService } from 'src/app/_services/account.service';
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private accountService: AccountService,
-      private alertService: AlertService
+      private alertService: AlertService,
+      private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -57,7 +59,8 @@ export class RegisterComponent implements OnInit {
           .pipe(first())
           .subscribe({
               next: () => {
-                  this.alertService.success('Registration successful, please check your email for verification instructions', { keepAfterRouteChange: true });
+
+                  this.toastrService.success('Registration successful, please check your email for verification instructions');
                   this.router.navigate(['../login'], { relativeTo: this.route });
               },
               error: error => {

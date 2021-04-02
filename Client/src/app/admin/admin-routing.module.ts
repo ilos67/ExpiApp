@@ -16,7 +16,7 @@ const routes: Routes = [
         children: [
             { path: '', component: OverviewComponent },
             { path: 'accounts', loadChildren: accountsModule },
-            { path: 'admin-product', loadChildren: adminProductModule },
+            { path: 'product-management', loadChildren: adminProductModule },
         ]
     }
 ];

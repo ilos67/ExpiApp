@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { NotFoundComponent } from './core/not-found/not-found.component';
+import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home';
 import { MainComponent } from './main/main.component';
 import { ProductsComponent } from './products/products/products.component';
@@ -12,12 +15,16 @@ const profileModule = () => import('./profile/profile.module').then(x => x.Profi
 const productModule = () => import('./products/products.module').then(x => x.ProductsModule);
 
 const routes: Routes = [
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: '', component: MainComponent},
-    { path: 'products', loadChildren: productModule},
-    { path: 'account', loadChildren: accountModule },
-    { path: 'profile', loadChildren: profileModule, canActivate: [AuthGuard] },
-    { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+  { path: '', component: MainComponent},
+  { path: 'test-error', component: TestErrorComponent, data: { breadcrumb: 'Test Errors' } },
+  { path: 'server-error', component: ServerErrorComponent, data: { breadcrumb: 'Server Error' } },
+  { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'products', loadChildren: () => import('./products/products.module').then(x => x.ProductsModule), 
+      data: { breadcrumb: 'Product' }},
+  { path: 'account', loadChildren: () => import('./account/account.module').then(x => x.AccountModule) },
+  { path: 'profile', canActivate: [AuthGuard],loadChildren: () => import('./profile/profile.module').then(x => x.ProfileModule)},
+  { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

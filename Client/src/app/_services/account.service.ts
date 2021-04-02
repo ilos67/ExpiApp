@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Account } from '../_models/account'
@@ -30,11 +30,11 @@ export class AccountService {
         return this.accountSubject.value;
     }
 
+
     login(email: string, password: string) {
         return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
             .pipe(map(account => {
                 this.accountSubject.next(account);
-                console.log(account);
                 this.startRefreshTokenTimer();
                 return account;
                 

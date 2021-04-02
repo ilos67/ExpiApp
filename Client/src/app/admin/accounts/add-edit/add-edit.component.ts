@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
 import { MustMatch } from 'src/app/_helpers';
 import { AccountService } from 'src/app/_services/account.service';
 import { AlertService } from 'src/app/_services/alert.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-add-edit',
@@ -23,8 +25,12 @@ export class AddEditComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private accountService: AccountService,
-      private alertService: AlertService
-  ) {}
+      private alertService: AlertService,
+      private bcService: BreadcrumbService,
+      private toastrService: ToastrService
+  ) {
+    this.bcService.set('@Account', '');
+  }
 
   ngOnInit() {
       this.id = this.route.snapshot.params['id'];
@@ -76,11 +82,11 @@ export class AddEditComponent implements OnInit {
           .pipe(first())
           .subscribe({
               next: () => {
-                  this.alertService.success('Account created successfully', { keepAfterRouteChange: true });
+                  this.toastrService.success('Account created successfully');
                   this.router.navigate(['../'], { relativeTo: this.route });
               },
               error: error => {
-                  this.alertService.error(error);
+                  this.toastrService.error(error);
                   this.loading = false;
               }
           });

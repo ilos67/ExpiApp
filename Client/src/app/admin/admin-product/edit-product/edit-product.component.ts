@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ProductsService } from 'src/app/products/products.service';
 import { IBrand, IType, ProductFormValues, IProduct } from 'src/app/_models';
+import { BreadcrumbService } from 'xng-breadcrumb';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -19,8 +20,10 @@ export class EditProductComponent implements OnInit {
   constructor(private adminService: AdminService,
               private productService: ProductsService,
               private route: ActivatedRoute,
+              private bcService: BreadcrumbService,
               private router: Router) {
     this.productFormValues = new ProductFormValues();
+    this.bcService.set('@Product', '');
   }
 
   ngOnInit(): void {
@@ -48,6 +51,7 @@ export class EditProductComponent implements OnInit {
         const productBrandId = this.brands && this.brands.find(x => x.name === response.productBrand).id;
         const productTypeId = this.types && this.types.find(x => x.name === response.productType).id;
         this.product = response;
+        this.bcService.set('@Product', response.name);
         this.productFormValues = {...response, productBrandId, productTypeId};
       });
     }

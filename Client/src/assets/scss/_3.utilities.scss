@@ -59,5 +59,15 @@ align-items: center;
     font-size: font-size(font-size-medium);
   }
 
+  .nav-link {
+    text-decoration: none;
+    color: var(--color-quinary-m);
+    font-weight: font-weight(font-weight-light);
+    letter-spacing: 0.2rem;
+    font-size: font-size(font-size-small);
+  }
+
+
+
 
   

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {PaginationModule } from 'ngx-bootstrap/pagination';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import {TabsModule } from 'ngx-bootstrap/tabs';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 import { PagerComponent } from './components/pager/pager.component';
@@ -19,6 +20,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     CommonModule,
     CarouselModule.forRoot(),
     PaginationModule.forRoot(),
+    BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     NgxDropzoneModule,
     ImageCropperModule,
@@ -32,6 +34,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     CarouselModule,
     PaginationModule,
     NgxGalleryModule,
+    BsDropdownModule,
     NgxDropzoneModule,
     ImageCropperModule,
     PagerComponent,

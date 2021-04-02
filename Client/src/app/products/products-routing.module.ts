@@ -13,7 +13,7 @@ const routes: Routes = [
       path: '', 
       children: [
           { path: '', component: ProductsComponent },
-          { path: ':id', component: ProductDetailComponent }
+          { path: ':id', component: ProductDetailComponent ,data: {breadcrumb: {alias: 'ProductDetails'}}}
       ]
   }
 ];
