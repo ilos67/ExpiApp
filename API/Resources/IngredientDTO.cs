@@ -5,9 +5,7 @@ namespace API.Resources
 {
     public class IngredientDTO
     {
-        public int IngredientId { get; set; }
-
-        public string IngredientName { get; set; }
-        public decimal Quantity { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

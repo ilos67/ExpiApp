@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 
@@ -6,11 +7,8 @@ namespace API.Services
 {
     public interface IRecipeService
     {
-     
-        Task<Recipe> CreateOrderAsync(string sourceEmail, int deliveryMethod, string basketId);
-         Task<IReadOnlyList<Recipe>> GetRecipesForUserAsync(string sourceEmail);
-         Task<Recipe> GetRecipeByIdAsync( int id, string sourceMail);
-         Task<IReadOnlyList<MealCategory>> GetMealCategoryAsync();
-
+        Task<Product> GetRecipe(int id);
+        void CreateOrUpdateRecipe(Product product);
+        void AddIngredientsToRecipe(IEnumerable<IngredientInRecipe> ingredients, int productId);
     }
 }

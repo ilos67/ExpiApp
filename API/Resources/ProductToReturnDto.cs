@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Entities;
 
 namespace API.Resources
 {
@@ -12,6 +13,7 @@ namespace API.Resources
         public string ProductType { get; set; }
         public string ProductBrand { get; set; }
         public IEnumerable<PhotoToReturnDto> Photos { get; set; }
+        public IEnumerable<RecipeToReturnDTO> Ingredients { get; set; }
 
 
     }

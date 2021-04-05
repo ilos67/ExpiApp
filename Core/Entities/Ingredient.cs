@@ -12,5 +12,6 @@ namespace Core.Entities
 
         public int IngredientCategoryId { get; set; }
         public IngredientCategory IngredientCategory { get; set; }
+        public ICollection<IngredientInRecipe> Products { get; set; }
     }
 }

@@ -24,45 +24,41 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Recipe>> CreateRecipe(RecipeDTO recipeDTO)
-        {
-            var email = HttpContext.User.RetrieveEmailFromPrincipal();
+        // [HttpGet]
+        // public async Task<ActionResult<IReadOnlyList<RecipeDTO>>> GetOrdersForUser()
+        // {
+        //     // var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
-            var recipe = await _recipeService.CreateOrderAsync(email, recipeDTO.MealCategoryId, recipeDTO.BasketId);
+        //     var orders = await _recipeService.GetRecipeAsync();
+        //      return Ok(_mapper.Map<IReadOnlyList<Recipe>, IReadOnlyList<RecipeDTO>>(orders));
+        // }
 
-            if(recipe == null) return BadRequest(new ApiResponse(400, "Problem creating recipe"));
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<RecipeDTO>> GetOrderByIdForUser(int id)
+        // {
+        //     // var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
-            return Ok(recipe);
-        }
+        //     var order = await _recipeService.GetRecipeByIdAsync(id);
+
+        //     if (order == null) return NotFound(new ApiResponse(404));
+
+        //     return _mapper.Map<Recipe, RecipeDTO>(order);
+        // }
+
+
+        // [HttpPost]
+        // public async Task<ActionResult<Recipe>> CreateRecipe(RecipeDTO recipeDTO)
+        // {
+        //     var email = HttpContext.User.RetrieveEmailFromPrincipal();
+
+        //     var recipe = await _recipeService.CreateOrderAsync(email, recipeDTO.MealCategoryId, recipeDTO.BasketId);
+
+        //     if(recipe == null) return BadRequest(new ApiResponse(400, "Problem creating recipe"));
+
+        //     return Ok(recipe);
+        // }
 
         
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<RecipeDTO>>> GetRecipesForUser()
-        {
-            var email = HttpContext.User.RetrieveEmailFromPrincipal();
-
-            var recipes = await _recipeService.GetRecipesForUserAsync(email);
-
-            return Ok(_mapper.Map<IReadOnlyList<Recipe>, IReadOnlyList<RecipeToReturnDTO>>(recipes));
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RecipeToReturnDTO>> GetRecipeByIdForUser(int id)
-        {
-            var email = HttpContext.User.RetrieveEmailFromPrincipal();
-
-            var recipe = await _recipeService.GetRecipeByIdAsync(id,email);
-
-            if (recipe == null) return NotFound(new ApiResponse(404));
-
-            return _mapper.Map<Recipe, RecipeToReturnDTO>(recipe);
-        }
-
-        [HttpGet("mealCategories")]
-        public async Task<ActionResult<IReadOnlyList<MealCategory>>> GetMealCategories()
-        {
-            return Ok(await _recipeService.GetMealCategoryAsync());
-        }
+        
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using API.Resources;
 using API.Resources.Accounts;
 using AutoMapper;
@@ -34,28 +35,28 @@ namespace API.Helpers
                     }
                 ));
 
+        
              CreateMap<UserBasketDto, UserBasket>();
             CreateMap<BasketItemDto, BasketItem>();
 
-            CreateMap<ProductCreateDto, Product>();
 
             CreateMap<Photo, PhotoToReturnDto>()
                 .ForMember(d => d.PictureUrl, 
                     o => o.MapFrom<PhotoUrlResolver>());
 
+            CreateMap<ProductCreateDto, Product>();
+
             CreateMap<Product, ProductToReturnDto>()
              .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
-                .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
+                // .ForMember(d => d.Ingredients, o => o.MapFrom(s => s.Ingredients.Select(vf => new KeyValuePairResource {Id = vf.Ingredient.Id, Name = vf.Ingredient.Name})))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());  
 
-            CreateMap<Ingredient, IngredientDTO>();
-            CreateMap<Recipe, RecipeToReturnDTO>()
-            .ForMember(d => d.MealCategory,  o => o.MapFrom(s => s.MealCategory.Name));
-
-            CreateMap<RecipeItems, IngredientDTO>()
-                .ForMember(d => d.IngredientId, o => o.MapFrom(s => s.ItemReciped.IngredientItemId))
-                .ForMember(d => d.IngredientName, o => o.MapFrom(s => s.ItemReciped.IngredientName));
-                
+            CreateMap<IngredientInRecipe, RecipeToReturnDTO>()
+            .ForMember(d => d.Quantity, o => o.MapFrom(s => s.Quantity))
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.IngredientId))
+            .ForMember(d => d.IngredientName, o => o.MapFrom(s => s.Ingredient.Name))
+            ;
         }
     }
 }

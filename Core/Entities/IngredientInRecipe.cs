@@ -3,19 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities
 {
     [Table("IngredientsInRecipes")]
-    public class IngredientInRecipe : BaseEntity
+    public class IngredientInRecipe
     {
-        public IngredientInRecipe()
-        {
-        }
+        public int IngredientId { get; set; }
+        public Ingredient Ingredient { get; set; }
 
-        public IngredientInRecipe(IngredientItemOrdered ıtemInRecipe, int quantity)
-        {
-            ItemInRecipe = ıtemInRecipe;
-            Quantity = quantity;
-        }
+        public Product Product {get; set; }
+        public int ProductId { get; set; }
 
-        public IngredientItemOrdered ItemInRecipe { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

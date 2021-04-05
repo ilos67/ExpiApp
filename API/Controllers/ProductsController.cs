@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Errors;
 using API.Helpers;
 using API.Resources;
+using API.Services;
 using AutoMapper;
 using Core.Entities;
 using Core.Interface;
@@ -17,12 +18,12 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoService _photoService;
-        public ProductsController( IMapper mapper, IUnitOfWork unitOfWork, IPhotoService photoService)
+        public ProductsController(IMapper mapper, IUnitOfWork unitOfWork, IPhotoService photoService)
         {
             _photoService = photoService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-       }
+        }
 
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
@@ -51,7 +52,7 @@ namespace API.Controllers
 
             var totalItems = await _unitOfWork.Repository<Product>().CountAsync(countSpec);
 
-            var products = await  _unitOfWork.Repository<Product>().ListAsync(spec);
+            var products = await _unitOfWork.Repository<Product>().ListAsync(spec);
 
             var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
 
@@ -72,7 +73,7 @@ namespace API.Controllers
 
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
 
-            var product = await  _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+            var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
 
             if (product == null) return NotFound(new ApiResponse(404));
 
@@ -85,7 +86,7 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
             //1- return Ok(await _repo.GetProductBrandsAsync());
-            return Ok(await  _unitOfWork.Repository<ProductBrand>().ListAllAsync());
+            return Ok(await _unitOfWork.Repository<ProductBrand>().ListAllAsync());
         }
 
         [HttpGet("types")]
@@ -107,13 +108,13 @@ namespace API.Controllers
 
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating product"));
 
-             return _mapper.Map<Product, ProductToReturnDto>(product);
+            return _mapper.Map<Product, ProductToReturnDto>(product);
         }
-        
+
         [HttpPut("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, ProductCreateDto productToUpdate)
         {
-           var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
 
             _mapper.Map(productToUpdate, product);
 
@@ -125,22 +126,22 @@ namespace API.Controllers
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await _unitOfWork.Repository<Product>().GetByIdAsync(id);
-            
+
             _unitOfWork.Repository<Product>().Delete(product);
 
             var result = await _unitOfWork.Complete();
-            
+
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
 
             return Ok();
         }
 
-        
+
         [HttpPut("{id}/photo")]
         public async Task<ActionResult<ProductToReturnDto>> AddProductPhoto(int id, [FromForm] ProductPhotoDto photoDto)
         {
@@ -222,6 +223,18 @@ namespace API.Controllers
             return Ok();
         }
 
-      
+        [HttpGet("ingre")]
+        public async Task<ActionResult<IReadOnlyList<IngredientDTO>>> GetIngredients()
+        {
+            //1-return Ok(await _repo.GetProductTypesAsync());
+            return Ok(await _unitOfWork.Repository<Ingredient>().ListAllAsync());
+        }
+
+        //  [HttpGet("recipes")]
+        // public async Task<ActionResult<IReadOnlyList<IngredientDTO>>> GetIngredients()
+        // {
+        //     //1-return Ok(await _repo.GetProductTypesAsync());
+        //     return Ok(await _unitOfWork.Repository<Ingredient>().ListAllAsync());
+        // }
     }
 }

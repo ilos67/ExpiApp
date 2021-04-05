@@ -89,7 +89,7 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
-                if (!context.Categories.Any())
+                if (!context.MealCategories.Any())
                 {
                     var categories = new List<MealCategory>()
                 {
@@ -106,7 +106,7 @@ namespace Infrastructure.Data
                 };
 
                     foreach (var category in categories)
-                        context.Categories.Add(category);
+                        context.MealCategories.Add(category);
 
                     await context.SaveChangesAsync();
                 }

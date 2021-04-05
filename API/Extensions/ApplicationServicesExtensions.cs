@@ -16,7 +16,7 @@ namespace API.Extensions
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IRecipeService, RecipeService>();
+            // services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
