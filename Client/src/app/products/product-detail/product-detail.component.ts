@@ -31,8 +31,8 @@ ngOnInit() {
   initializeGallery() {
     this.galleryOptions = [
       {
-        width: '400px',
-        height: '500px',
+        width: '300px',
+        height: '400px',
         imagePercent: 100,
         thumbnailsColumns: 4,
         imageArrowsAutoHide:true,

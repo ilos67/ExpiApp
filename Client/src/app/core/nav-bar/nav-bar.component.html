@@ -19,10 +19,10 @@
     
      </nav>
     <div class="d-flex align-items-center dropum">
-      <!-- <a routerLink="/basket" class="position-relative">
+      <a routerLink="/basket" class="position-relative">
         <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"></i>
         <div *ngIf="(basket$ | async)" class="cart-no">{{(basket$ | async).items.length}}</div>
-      </a> -->
+      </a>
       <ng-container *ngIf="!account" >
         <a routerLink="/account/login" class="btn btn-outline-secondary mr-2">Login</a>
         <a routerLink="/account/register" class="btn btn-outline-secondary mr-3">Sign up</a>

@@ -1,5 +1,6 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { IProduct } from 'src/app/_models';
 import { AdminService } from '../admin.service';
 
@@ -12,7 +13,7 @@ export class EditProductPhotosComponent implements OnInit {
   @Input() product: IProduct;
   progress = 0;
   addPhotoMode = false;
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private toast: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -34,9 +35,9 @@ export class EditProductPhotosComponent implements OnInit {
       }
     }, error => {
       if (error.errors) {
-        // this.toast.error(error.errors[0]);
+        this.toast.error(error.errors[0]);
       } else {
-        // this.toast.error('Problem uploading image');
+        this.toast.error('Problem uploading image');
       }
       this.progress = 0;
     });
@@ -47,7 +48,7 @@ export class EditProductPhotosComponent implements OnInit {
       const photoIndex = this.product.photos.findIndex(x => x.id === photoId);
       this.product.photos.splice(photoIndex, 1);
     }, error => {
-      // this.toast.error('Problem deleting photo');
+      this.toast.error('Problem deleting photo');
       console.log(error);
     });
   }

@@ -19,10 +19,11 @@ const routes: Routes = [
   { path: 'test-error', component: TestErrorComponent, data: { breadcrumb: 'Test Errors' } },
   { path: 'server-error', component: ServerErrorComponent, data: { breadcrumb: 'Server Error' } },
   { path: 'not-found', component: NotFoundComponent, data: { breadcrumb: 'Not Found' } },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] , data: { breadcrumb: { skip: true } }},
   { path: 'products', loadChildren: () => import('./products/products.module').then(x => x.ProductsModule), 
       data: { breadcrumb: 'Product' }},
-  { path: 'account', loadChildren: () => import('./account/account.module').then(x => x.AccountModule) },
+  { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule), data: { breadcrumb: 'Basket' } },
+  { path: 'account', loadChildren: () => import('./account/account.module').then(x => x.AccountModule),  data: { breadcrumb: { skip: true } } },
   { path: 'profile', canActivate: [AuthGuard],loadChildren: () => import('./profile/profile.module').then(x => x.ProfileModule)},
   { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
 

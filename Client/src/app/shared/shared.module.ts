@@ -13,9 +13,10 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { PhotoWidgetComponent } from './components/photo-widget/photo-widget.component';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
 
 @NgModule({
-  declarations: [PagerComponent, PagingHeaderComponent, PhotoWidgetComponent],
+  declarations: [PagerComponent, PagingHeaderComponent, PhotoWidgetComponent, BasketSummaryComponent],
   imports: [
     CommonModule,
     CarouselModule.forRoot(),
@@ -43,7 +44,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ReactiveFormsModule,
     FormsModule,
     TabsModule,
-    PhotoWidgetComponent
+    PhotoWidgetComponent,
+    BasketSummaryComponent
   ]
 })
 export class SharedModule { }

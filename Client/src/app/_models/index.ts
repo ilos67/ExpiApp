@@ -6,3 +6,4 @@ export * from './brand';
 export * from './productType';
 export * from './productPagination';
 export * from './productParams';
+export * from './basket';
