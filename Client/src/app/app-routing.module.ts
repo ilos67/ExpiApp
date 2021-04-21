@@ -22,6 +22,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] , data: { breadcrumb: { skip: true } }},
   { path: 'products', loadChildren: () => import('./products/products.module').then(x => x.ProductsModule), 
       data: { breadcrumb: 'Product' }},
+  { path: 'ingredients', loadChildren: () => import('./ingredient/ingredient.module').then(x => x.IngredientModule), 
+      data: { breadcrumb: 'Ingredient' }},
   { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule), data: { breadcrumb: 'Basket' } },
   { path: 'account', loadChildren: () => import('./account/account.module').then(x => x.AccountModule),  data: { breadcrumb: { skip: true } } },
   { path: 'profile', canActivate: [AuthGuard],loadChildren: () => import('./profile/profile.module').then(x => x.ProfileModule)},

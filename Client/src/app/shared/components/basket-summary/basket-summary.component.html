@@ -2,10 +2,10 @@
     <div class="table-responsive">
         <table class="table table-borderless">
             <thead [class.thead-light]="isBasket" class="border-0 py-2">
-            <!-- <thead [class.thead-light]="isBasket || isOrder" class="border-0 py-2"> -->
+            <thead [class.thead-light]="isBasket || isOrder" class="border-0 py-2">
                 <tr>
                     <th scope="col">
-                        <div class="p-2 px-3 text-uppercase">Product</div>
+                        <div class="p-2 px-3 text-uppercase">Ingredient</div>
                     </th>
                     <th scope="col">
                         <div class="py-2 text-uppercase">Price</div>
@@ -25,12 +25,12 @@
                 <tr *ngFor="let item of items" class="border-0">
                     <th scope="row">
                         <div class="p-0">
-                            <!-- <img src="{{item.pictureUrl}}" alt="{{item.productName}}" -->
-                                class="img-fluid" style="max-height: 50px;">
+                            <!-- <img src="{{item.pictureUrl}}" alt="{{item.productName}}"
+                                class="img-fluid" style="max-height: 50px;"> -->
                             <div class="ml-3 d-inline-block align-middle">
                                 <h5 class="mb-0">
-                                    <!-- <a routerLink="/shop/{{item.id || item.productId}}" -->
-                                        <a class="text-dark">{{item.productName}}</a>
+                                    <a routerLink="/ingredients/{{item.id || item.id}}"
+                                        class="text-dark">{{item.ingredientName}}</a>
                                 </h5>
                                 <!-- <span
                                     *ngIf="item.type"

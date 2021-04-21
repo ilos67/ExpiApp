@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IBasket, IBasketItem, Basket, IBasketTotals } from '../_models/basket';
 import { map } from 'rxjs/operators';
 import { IProduct } from '../_models/product';
+import { IIngredient } from '../shared/models/ingredient';
 // import { IDeliveryMethod } from '../shared/models/deliveryMethod';
 
 @Injectable({
@@ -20,14 +21,14 @@ export class BasketService {
 
   constructor(private http: HttpClient) { }
 
-  createPaymentIntent() {
-    return this.http.post(this.baseUrl + 'payments/' + this.getCurrentBasketValue().id, {})
-      .pipe(
-        map((basket: IBasket) => {
-          this.basketSource.next(basket);
-        })
-      );
-  }
+  // createPaymentIntent() {
+  //   return this.http.post(this.baseUrl + 'payments/' + this.getCurrentBasketValue().id, {})
+  //     .pipe(
+  //       map((basket: IBasket) => {
+  //         this.basketSource.next(basket);
+  //       })
+  //     );
+  // }
 
   // setShippingPrice(deliveryMethod: IDeliveryMethod) {
   //   this.shipping = deliveryMethod.price;
@@ -62,7 +63,7 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: IProduct, quantity = 1) {
+  addItemToBasket(item: IIngredient, quantity = 1) {
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item, quantity);
     let basket = this.getCurrentBasketValue();
     if (basket === null) {
@@ -143,10 +144,10 @@ export class BasketService {
     return basket;
   }
 
-  private mapProductItemToBasketItem(item: IProduct, quantity: number): IBasketItem {
+  private mapProductItemToBasketItem(item: IIngredient, quantity: number): IBasketItem {
     return {
       id: item.id,
-      productName: item.name,
+      ingredientName: item.name,
       price: item.price,
       // pictureUrl: item.pictureUrl,
       quantity,

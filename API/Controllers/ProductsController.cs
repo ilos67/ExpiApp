@@ -223,12 +223,12 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpGet("ingre")]
-        public async Task<ActionResult<IReadOnlyList<IngredientDTO>>> GetIngredients()
-        {
-            //1-return Ok(await _repo.GetProductTypesAsync());
-            return Ok(await _unitOfWork.Repository<Ingredient>().ListAllAsync());
-        }
+        // [HttpGet("ingre")]
+        // public async Task<ActionResult<IReadOnlyList<IngredientDTO>>> GetIngredients()
+        // {
+        //     //1-return Ok(await _repo.GetProductTypesAsync());
+        //     return Ok(await _unitOfWork.Repository<Ingredient>().ListAllAsync());
+        // }
 
         //  [HttpGet("recipes")]
         // public async Task<ActionResult<IReadOnlyList<IngredientDTO>>> GetIngredients()

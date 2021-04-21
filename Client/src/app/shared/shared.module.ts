@@ -14,9 +14,10 @@ import { PhotoWidgetComponent } from './components/photo-widget/photo-widget.com
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
+import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 
 @NgModule({
-  declarations: [PagerComponent, PagingHeaderComponent, PhotoWidgetComponent, BasketSummaryComponent],
+  declarations: [PagerComponent, PagingHeaderComponent, PhotoWidgetComponent, BasketSummaryComponent, OrderTotalsComponent],
   imports: [
     CommonModule,
     CarouselModule.forRoot(),
@@ -45,7 +46,8 @@ import { BasketSummaryComponent } from './components/basket-summary/basket-summa
     FormsModule,
     TabsModule,
     PhotoWidgetComponent,
-    BasketSummaryComponent
+    BasketSummaryComponent,
+    OrderTotalsComponent
   ]
 })
 export class SharedModule { }

@@ -13,8 +13,6 @@ namespace API.Resources
         public string ProductType { get; set; }
         public string ProductBrand { get; set; }
         public IEnumerable<PhotoToReturnDto> Photos { get; set; }
-        public IEnumerable<RecipeToReturnDTO> Ingredients { get; set; }
-
-
+        public IEnumerable<RecipeItemDTO> RecipeItems { get; set; }
     }
 }

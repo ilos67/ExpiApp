@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Core.Entities.RecipeAggregate;
 
 namespace Core.Entities
 {
@@ -14,9 +15,14 @@ namespace Core.Entities
         public int ProductTypeId { get; set; }
         public ProductBrand ProductBrand { get; set; }
         public int ProductBrandId { get; set; }
-        public ICollection<IngredientInRecipe> Ingredients { get; set; }
+        public IReadOnlyList<RecipeItem> RecipeItems { get; set; }
         private readonly List<Photo> _photos = new List<Photo>();
         public IReadOnlyList<Photo> Photos => _photos.AsReadOnly();
+
+        public Product()
+        {
+           RecipeItems = new Collection<RecipeItem>(); 
+        }
 
         public void AddPhoto(string pictureUrl, string fileName, bool isMain = false)
         {

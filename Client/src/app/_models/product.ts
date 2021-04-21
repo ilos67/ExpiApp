@@ -7,14 +7,14 @@ export interface IProduct {
     productType: string;
     productBrand: string;
     photos: IPhoto[];
-    ingredients: IIngredient[];
+    // ingredients: IIngredient[];
 }
 
-export interface IIngredient {
-  id: number;
-  name: string;
-  quantity: number;
-}
+// export interface IIngredient {
+//   id: number;
+//   name: string;
+//   price: number;
+// }
 
 export interface IPhoto {
   id: number;

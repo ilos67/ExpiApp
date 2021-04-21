@@ -9,9 +9,6 @@ namespace Core.Entities
     {
         [Required]
         public string Name { get; set; }
-
-        public int IngredientCategoryId { get; set; }
-        public IngredientCategory IngredientCategory { get; set; }
-        public ICollection<IngredientInRecipe> Products { get; set; }
+        public decimal Price { get; set; }
     }
 }

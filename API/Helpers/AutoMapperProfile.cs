@@ -4,6 +4,7 @@ using API.Resources.Accounts;
 using AutoMapper;
 using Core.Entities;
 using Core.Entities.Identity;
+using Core.Entities.RecipeAggregate;
 
 namespace API.Helpers
 {
@@ -49,14 +50,13 @@ namespace API.Helpers
             CreateMap<Product, ProductToReturnDto>()
              .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
                 .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
-                // .ForMember(d => d.Ingredients, o => o.MapFrom(s => s.Ingredients.Select(vf => new KeyValuePairResource {Id = vf.Ingredient.Id, Name = vf.Ingredient.Name})))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());  
 
-            CreateMap<IngredientInRecipe, RecipeToReturnDTO>()
-            .ForMember(d => d.Quantity, o => o.MapFrom(s => s.Quantity))
-            .ForMember(d => d.Id, o => o.MapFrom(s => s.IngredientId))
-            .ForMember(d => d.IngredientName, o => o.MapFrom(s => s.Ingredient.Name))
-            ;
+            CreateMap<RecipeItem, RecipeItemDTO>()
+                .ForMember(d => d.IngredientId, o => o.MapFrom(s =>  s.ItemAdded.IngredientItemId))
+                .ForMember(d => d.IngredientName, o => o.MapFrom(s =>  s.ItemAdded.IngredientName));
+            
+            CreateMap<Ingredient, IngredientToReturnDto>();
         }
     }
 }

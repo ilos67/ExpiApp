@@ -49,6 +49,21 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
+                 if (!context.Ingredients.Any())
+                {
+                    var typesData =
+                        File.ReadAllText("../Infrastructure/Data/SeedData/ingredients.json");
+
+                    var types = JsonSerializer.Deserialize<List<Ingredient>>(typesData);
+
+                    foreach (var item in types)
+                    {
+                        context.Ingredients.Add(item);
+                    }
+
+                    await context.SaveChangesAsync();
+                }
+
                 // if (!context.Products.Any())
                 // {
                 //     var productsData =
@@ -89,6 +104,8 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
+
+                /* Meal Category Beginning ********************************
                 if (!context.MealCategories.Any())
                 {
                     var categories = new List<MealCategory>()
@@ -111,7 +128,9 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
+*************************************************************************/
 
+/*
                 if (!context.IngredientCategory.Any())
                 {
                     var categories = new List<IngredientCategory>()
@@ -192,7 +211,7 @@ namespace Infrastructure.Data
 
                     await context.SaveChangesAsync();
                 }
-
+*/
 
             }
             catch (Exception ex)

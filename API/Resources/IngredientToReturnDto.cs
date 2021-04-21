@@ -1,11 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-using Core.Entities;
-
 namespace API.Resources
 {
-    public class IngredientDTO
+    public class IngredientToReturnDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
     }
 }

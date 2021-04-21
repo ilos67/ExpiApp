@@ -2,7 +2,8 @@
     <!-- <img src="../../../assets/img/logo/lezzet.png" style="max-height: 70px;" alt="logo" class="logo" routerLink="/"> -->
     <nav class="navbar2">
       <ul class="navbar">
-        <li class="nav-link-li"><a class="nav-link" routerLink="/products" routerLinkActive="active">Shop</a></li>
+        <li class="nav-link-li"><a class="nav-link" routerLink="/products" routerLinkActive="active">Product</a></li>
+        <li class="nav-link-li"><a class="nav-link" routerLink="/ingredients" routerLinkActive="active">Ingredient</a></li>
         <li class="nav-link-li"> <a class="nav-link" routerLink="/test-error" routerLinkActive="active">Errors</a></li>
         <li class="nav-link-li"><a href=""></a></li>
         <li class="nav-link-li">
@@ -34,9 +35,9 @@
             <strong>Welcome {{account.firstName}}</strong>  
           </a>
           <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
-            <!-- <a routerLink="/basket" class="dropdown-item d-flex align-items-center py-2">
+            <a routerLink="/basket" class="dropdown-item d-flex align-items-center py-2">
               <i class="fa fa-shopping-cart mr-3"></i> View Basket
-            </a> -->
+            </a>
            <a routerLink="/profile" routerLinkActive="active" class="nav-link" >Profile</a>
             <div class="dropdown-divider"></div>
             <a (click)="logout()" class="dropdown-item d-flex align-items-center nav-link py-2">
