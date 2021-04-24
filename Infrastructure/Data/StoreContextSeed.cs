@@ -52,7 +52,7 @@ namespace Infrastructure.Data
                  if (!context.Ingredients.Any())
                 {
                     var typesData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/ingredients.json");
+                        File.ReadAllText("../Infrastructure/Data/SeedData/ingredient.json");
 
                     var types = JsonSerializer.Deserialize<List<Ingredient>>(typesData);
 
