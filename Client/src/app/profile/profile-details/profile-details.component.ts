@@ -12,7 +12,6 @@ export class ProfileDetailsComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
-    console.log(this.account)
   }
 
 }

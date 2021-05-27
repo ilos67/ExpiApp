@@ -1,4 +1,97 @@
-<!-- <div class="col-3" *ngFor="let photo of product?.ingredients">
-  <p>{{ photo.id }}</p>
-</div> -->
+<div class="containerk">
+  
+<div class="row">
+  <!-- <section class="col-3">
+          <ng-container>
+          <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
+          <select class="custom-select mb-4" >
+              <option *ngFor="let sort of sortOptions"
+              [selected]="ingredientParams.sort === sort.value"
+              [value]="sort.value">
+                  {{sort.name}}
+              </option>
 
+          </select>
+          
+          
+      </ng-container>
+      </section> -->
+      <section class="col-12">
+        <div class="d-flex justify-content-between align-items-center pb-2">
+          <app-paging-header
+          [totalCount]="totalCount"
+          [pageSize]="this.ingredientParams.pageSize"
+          [pageNumber]="this.ingredientParams.pageNumber"
+          >
+          </app-paging-header>
+      <div class="form-inline" *ngIf="ingredients">
+          <input (keyup.enter)="onSearch()" class="form-control mr-2" #search style="width: 300px;" placeholder="Search" type="text">
+          <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
+          <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>
+      </div>
+  </div>
+      </section>
+      <section class="col-6">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">
+                <div class="p-2">Id</div>
+              </th>
+              <th scope="col">
+                <div class="p-2 text-uppercase">Product</div>
+              </th>
+              <th scope="col">
+                <div class="py-2 text-uppercase">Name</div>
+              </th>
+              <th scope="col">
+                <div class="p-2 px-3 text-uppercase">Price</div>
+              </th>
+              <th scope="col">
+                <div class="p-2 px-3 text-uppercase">Edit</div>
+              </th>
+              <th scope="col">
+                <div class="p-2 px-3 text-uppercase">Delete</div>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ingredient of ingredients">
+              <td class="align-middle">{{ingredient.id}}</td>
+              <td>
+                <div class="p-2">
+                  <img src="{{'../../../../../assets/img/placeholder.png'}}" alt="{{ingredient.name}}" class="img-fluid" style="max-height: 50px">
+                </div>
+              </td>
+              <th class="align-middle"><a routerLink="/ingredients/{{ingredient.id}}">
+                <h6 class="text-uppercase">{{ingredient.name}}</h6>
+            </a></th>
+              <td class="align-middle">{{ingredient.price | currency}}</td>
+              <td class="align-middle"><button [routerLink]="['edit', ingredient.id]" class="btn btn-warning">Edit</button></td>
+              <td class="align-middle"><button (click)="addItemToBasket()" class="btn btn-danger">Add</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+<!-- 
+        <div class="mb-3" *ngFor="let item of ingredients">
+          <app-ingredient-item [ingredient]="item"></app-ingredient-item>
+      </div> -->
+          <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
+             <app-pager
+             [pageSize]="ingredientParams.pageSize"
+             [totalCount]="totalCount"
+             [pageNumber]="ingredientParams.pageNumber"
+             (pageChanged)="onPageChanged($event)"
+             ></app-pager>     
+          </div>
+        </section>
+        <section class="col-6">
+          <app-basket-summary  (decrement)="decrementItemQuantity($event)"
+          (increment)="incrementItemQuantity($event)"
+          (remove)="removeBasketItem($event)"
+          ></app-basket-summary>
+        </section>
+        </div>
+      </div>

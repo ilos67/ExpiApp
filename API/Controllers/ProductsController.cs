@@ -18,8 +18,10 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoService _photoService;
-        public ProductsController(IMapper mapper, IUnitOfWork unitOfWork, IPhotoService photoService)
+        private readonly IRecipeService _recipeService;
+        public ProductsController(IMapper mapper, IUnitOfWork unitOfWork, IPhotoService photoService, IRecipeService recipeService)
         {
+            _recipeService = recipeService;
             _photoService = photoService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -170,6 +172,20 @@ namespace API.Controllers
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
+
+         [HttpPost("{id}/ingre")]
+        public async Task<ActionResult<ProductToReturnDto>> AddProductIngredient(int id, [FromForm] UserBasketDto itemDto)
+        {
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+            var product = await _unitOfWork.Repository<Product>().GetEntityWithSpec(spec);
+
+            var order = await _recipeService.CreateOrderAsync(id, itemDto.Id);
+
+            if (order == null) return BadRequest(new ApiResponse(400, "Problem creating order"));
+
+            return Ok(order);
+        }
+
 
 
         [HttpPost("{id}/photo/{photoId}")]

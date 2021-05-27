@@ -45,7 +45,7 @@ export class ProfileUpdateComponent implements OnInit {
 
   onSubmit() {
       this.submitted = true;
-      console.log(this.account.id);
+    //   console.log(this.account.id);
 
       // reset alerts on submit
       this.alertService.clear();
@@ -62,7 +62,6 @@ export class ProfileUpdateComponent implements OnInit {
               next: () => {
                   this.alertService.success('Update successful', { keepAfterRouteChange: true });
                   this.router.navigate(['../'], { relativeTo: this.route });
-                  console.log(this.account.id);
               },
               error: error => {
                   this.alertService.error(error);

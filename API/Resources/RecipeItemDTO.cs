@@ -6,5 +6,6 @@ namespace API.Resources
         public string IngredientName { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
+        public string BasketId { get; set; }
     }
 }
